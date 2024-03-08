@@ -1,11 +1,12 @@
-using Microsoft.Unity.VisualStudio.Editor;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Image = UnityEngine.UI.Image;
 
-public class SwitchBehavior : MonoBehaviour
+public class SwitchBehavior : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
 
     bool isFlippedUp = false;
@@ -28,7 +29,7 @@ public class SwitchBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        InvokeSwitch();
+        //InvokeSwitch();
         if (isFlippedUp)
         {
             // coroutine used to allow for irl pausing
@@ -40,34 +41,35 @@ public class SwitchBehavior : MonoBehaviour
         }
     }
 
+    void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
+    {
+        // save mouse down pos
+        firstPressPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        // save mouse release pos
+        secondPressPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        InvokeSwitch();
+    }
+
     public void InvokeSwitch()
     {
-        if (Input.GetMouseButtonDown(0))
+        // create vector from the two points
+        currentSwipe = new Vector2(secondPressPos.x - firstPressPos.x, secondPressPos.y - firstPressPos.y);
+
+        // normalize vector
+        currentSwipe.Normalize();
+
+        // confirm that vector was an upward swipe
+        if (currentSwipe.y > 0 && currentSwipe.x > -0.5f && currentSwipe.x < 0.5f)
         {
-            // save mouse down pos
-            firstPressPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
-            // save mouse release pos
-            secondPressPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-
-            // create vector from the two points
-            currentSwipe = new Vector2(secondPressPos.x - firstPressPos.x, secondPressPos.y - firstPressPos.y);
-
-            // normalize vector
-            currentSwipe.Normalize();
-
-            // confirm that vector was an upward swipe
-            if (currentSwipe.y > 0 && currentSwipe.x > -0.5f && currentSwipe.x < 0.5f)
-            {
-                switchButton.GetComponent<Image>().sprite = switchUp;
-                isFlippedUp = true;
-                counter++;
-                ChangeDialDirection();
-            }
-            
-        }
+            switchButton.GetComponent<Image>().sprite = switchUp;
+            isFlippedUp = true;
+            counter++;
+            ChangeDialDirection();
+        }            
     }
 
     void ChangeDialDirection()
@@ -94,8 +96,4 @@ public class SwitchBehavior : MonoBehaviour
         isFlippedUp = false;
         switchButton.GetComponent<Image>().sprite = switchDown;
     }
-
-    
-
-
 }

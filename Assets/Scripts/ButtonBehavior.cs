@@ -30,6 +30,5 @@ public class ButtonBehavior : MonoBehaviour
         {
             dial.GetComponent<DialBehavior>().canRotate = true;
         }
-        
     }
 }
