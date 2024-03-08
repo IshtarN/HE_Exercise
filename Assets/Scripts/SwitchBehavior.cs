@@ -29,7 +29,6 @@ public class SwitchBehavior : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     // Update is called once per frame
     void Update()
     {
-        //InvokeSwitch();
         if (isFlippedUp)
         {
             // coroutine used to allow for irl pausing
@@ -47,7 +46,7 @@ public class SwitchBehavior : MonoBehaviour, IPointerDownHandler, IPointerUpHand
         firstPressPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
     }
 
-    public void OnPointerUp(PointerEventData eventData)
+    void IPointerUpHandler.OnPointerUp(PointerEventData eventData)
     {
         // save mouse release pos
         secondPressPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
