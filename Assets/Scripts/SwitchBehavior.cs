@@ -62,7 +62,7 @@ public class SwitchBehavior : MonoBehaviour, IPointerDownHandler, IPointerUpHand
         currentSwipe.Normalize();
 
         // confirm that vector was an upward swipe
-        if (currentSwipe.y > 0 && currentSwipe.x > -0.5f && currentSwipe.x < 0.5f)
+        if (currentSwipe.y > 0 && currentSwipe.x > -0.5f && currentSwipe.x < 0.5f && !isFlippedUp)
         {
             switchButton.GetComponent<Image>().sprite = switchUp;
             isFlippedUp = true;
