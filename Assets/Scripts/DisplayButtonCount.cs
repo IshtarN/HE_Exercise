@@ -11,8 +11,6 @@ public class DisplayButtonCount : MonoBehaviour
     public GameObject counterText;
     int counter;
 
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -22,8 +20,8 @@ public class DisplayButtonCount : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // grab current count and display
         counter = button.GetComponent<ButtonBehavior>().counter;
-        //Debug.Log(counter);
         counterText.GetComponent<TextMeshProUGUI>().text = counter.ToString();
     }
 }

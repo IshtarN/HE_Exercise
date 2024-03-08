@@ -13,6 +13,7 @@ public class PopupController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // start with popup deactivated
         popup.SetActive(false);
     }
 
@@ -22,19 +23,13 @@ public class PopupController : MonoBehaviour
         TriggerPopUp();
     }
 
-    /*
-     1. appear at total 10 between counters
-     2. if YES is clicked (need to getcomp/findcomp for button), reset counters & dial position (rotation at all 0s, spinspeed 0, canRotate false)
-     3. if NO is clicked end program ( Application.Quit(); )
-     */
-
-
     public void TriggerPopUp()
     {
         buttonCounter = button.GetComponent<ButtonBehavior>().counter;
         switchCounter = switchB.GetComponent<SwitchBehavior>().counter;
 
-        if ( (buttonCounter + switchCounter) >= 10){
+        // when total between counters is 10, set popup to active
+        if ((buttonCounter + switchCounter) >= 10){
             popup.SetActive(true);
         }
     }  

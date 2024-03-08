@@ -14,6 +14,7 @@ public class NoButtonBehavior : MonoBehaviour
     {
     }
 
+    // end application
     public void clickedNo()
     {
         Application.Quit();

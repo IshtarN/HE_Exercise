@@ -21,6 +21,7 @@ public class ButtonBehavior : MonoBehaviour
     {
         counter++;
 
+        // when clicked, switches what the current canRotate behavior is
         if (dial.GetComponent<DialBehavior>().canRotate == true)
         {
             dial.GetComponent<DialBehavior>().canRotate = false;

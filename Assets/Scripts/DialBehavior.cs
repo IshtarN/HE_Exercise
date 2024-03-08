@@ -5,8 +5,8 @@ using UnityEngine;
 public class DialBehavior : MonoBehaviour
 {
     public GameObject dial;
-    float spinSpeed = 100f;
-    public Vector3 rotationDirection;
+    float spinSpeed = 300f;
+    Vector3 rotationDirection;
     public bool canRotate = false;
     public bool spinClockwise = true;
 
@@ -23,7 +23,8 @@ public class DialBehavior : MonoBehaviour
 
     public void SpinDial()
     {
-        if(spinClockwise)
+        // reverses the spin direction
+        if (spinClockwise)
         {
             rotationDirection = Vector3.back;
         } else
@@ -31,13 +32,9 @@ public class DialBehavior : MonoBehaviour
             rotationDirection = Vector3.forward;
         }
         
-        if(canRotate)
+        if (canRotate)
         {
-            //Debug.Log("Look I'm spinning!");
             dial.transform.Rotate(rotationDirection * spinSpeed * Time.deltaTime);
-        } else
-        {
-            //Debug.Log("Cant spin, sorry!");
         }
     }
 }
